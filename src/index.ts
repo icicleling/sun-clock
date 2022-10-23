@@ -98,7 +98,7 @@ const start = (position: GeolocationPosition) => {
   );
   bar.position.y = -0.5;
   bar.position.x =
-    (Number((suncalcValues.dayPercentage / 5).toFixed(0)) - cubesTotal / 2) *
+    (Math.floor(suncalcValues.dayPercentage / 5) - cubesTotal / 2) *
       cubeWrapperDistance +
     cubeSize * 1.75;
   cubesObject.add(bar);
