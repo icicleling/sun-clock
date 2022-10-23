@@ -5,6 +5,9 @@ import modernBuildingsHDR from "./assets/modern_buildings_2_1k.hdr";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { getSunCalc } from "./suncalc-utils";
 import Stats from "three/examples/jsm/libs/stats.module";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
 const stats = Stats();
 document.body.appendChild(stats.dom);
@@ -39,7 +42,7 @@ const start = (position: GeolocationPosition) => {
 
   // Scene
   const scene = new THREE.Scene();
-  const bgColor = new THREE.Color(0x454545);
+  const bgColor = new THREE.Color(0x262626);
   scene.background = bgColor;
   const light = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(light);
@@ -110,7 +113,17 @@ const start = (position: GeolocationPosition) => {
   boardMesh.position.set(0, -1, 0);
   scene.add(boardMesh);
 
-  renderer.render(scene, camera);
+  // Post processing
+  const renderScene = new RenderPass(scene, camera);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(canvas.clientWidth, canvas.clientHeight),
+    0.15,
+    0,
+    0
+  );
+  const composer = new EffectComposer(renderer);
+  composer.addPass(renderScene);
+  composer.addPass(bloomPass);
 
   // Render
   const activeCubeHeight = cubeSize * 1.8;
@@ -149,7 +162,7 @@ const start = (position: GeolocationPosition) => {
       }
       if (cube.material !== materialActive) return;
       if (cubebox.position.y > 0) {
-        cubebox.position.y -= 0.005;
+        cubebox.position.y -= 0.01;
         cubebox.rotation.y = 0;
         cube.rotation.x = 0;
         cube.rotation.y = 0;
@@ -162,7 +175,7 @@ const start = (position: GeolocationPosition) => {
     });
 
     controls.update();
-    renderer.render(scene, camera);
+    composer.render();
     requestAnimationFrame(render);
   };
   requestAnimationFrame(render);
