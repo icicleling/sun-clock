@@ -168,6 +168,14 @@ const start = (position: GeolocationPosition) => {
   requestAnimationFrame(render);
 };
 
-navigator.geolocation.getCurrentPosition((position) => {
-  start(position);
-});
+const loadingEl = document.querySelector("#loading") as HTMLElement;
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    loadingEl.hidden = true;
+    start(position);
+  },
+  () => {
+    loadingEl.innerHTML =
+      "Failed to get location. Please refresh and try again.";
+  }
+);
