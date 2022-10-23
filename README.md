@@ -1,15 +1,17 @@
-# 🚀 Welcome to your new awesome project!
+# Sun Clock - 太阳时钟
 
-This project has been created using **webpack-cli**, you can now run
+## 简而言之
 
-```
-npm run build
-```
+这个时钟把今天日出的时间到下一天日出的时间均分为二十等份, 通过这个时钟可以大概的观察到白天黑夜度过或剩余多少, 以及日出何时将至.
 
-or
+但它更重要的用途是, 给我不怎么用的屏幕当壁纸用 = =
 
-```
-yarn build
-```
+## FAQ
 
-to bundle your application
+### 为什么这个时钟没有标注更精确的时间?
+
+在当代快节奏和碎片化的生活中, 很多人迷失了自我. 我制作的这个艺术作品, 通过模糊的大概的时间表示, 让人们来思考时间的真正意义, 以及该如何更好的运用时间.
+
+### 你通过这个时钟, 更好的运用时间了吗?
+
+没有.

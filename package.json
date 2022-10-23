@@ -1,8 +1,13 @@
 {
   "devDependencies": {
+    "@types/suncalc": "^1.8.1",
+    "@types/three": "^0.144.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "@webpack-cli/generators": "^2.5.0",
     "autoprefixer": "^10.4.8",
     "css-loader": "^6.7.1",
+    "eslint": "^8.25.0",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
@@ -15,13 +20,20 @@
     "webpack-dev-server": "^4.11.1"
   },
   "version": "1.0.0",
-  "description": "My webpack project",
-  "name": "my-webpack-project",
+  "description": "Sun Clock",
+  "name": "sun-clock",
+  "private": true,
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "start": "webpack serve"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "lil-gui": "^0.17.0",
+    "suncalc": "^1.9.0",
+    "three": "^0.145.0"
   }
 }
