@@ -92,6 +92,8 @@ const start = (position: GeolocationPosition) => {
   cubeboxs.forEach((item) => {
     cubesObject.add(item);
   });
+
+  // Bar
   const bar = new THREE.Mesh(
     new THREE.BoxGeometry(0.1, 0.1, 4),
     new THREE.MeshPhongMaterial()
@@ -132,7 +134,7 @@ const start = (position: GeolocationPosition) => {
   let activeIndex: number | undefined = undefined;
   const render = (time: number) => {
     stats.update();
-    if (!last || time - last >= 5 * 1000) {
+    if (!last || time - last >= 60 * 1000) {
       last = time;
       suncalcValues = getSunCalc(position);
       const currentPercentage =
@@ -190,5 +192,6 @@ navigator.geolocation.getCurrentPosition(
   () => {
     loadingEl.innerHTML =
       "Failed to get location. Please refresh and try again.";
-  }
+  },
+  { timeout: 15 * 1000, maximumAge: 60 * 60 * 1000, enableHighAccuracy: false }
 );
