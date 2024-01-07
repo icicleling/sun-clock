@@ -2,11 +2,14 @@ import * as THREE from "three";
 import { getSunCalc } from "./suncalc-utils";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { createScene } from "./components/scene";
-import { createCamara } from "./systems/camara";
+import { createCamera } from "./systems/camera";
 import { createControls } from "./systems/controls";
 import { createCubeBoxs } from "./components/cubeboxs";
 import { createBoard } from "./components/board";
 import { createComposer } from "./systems/composer";
+import { createRenderer } from "./systems/renderer";
+import { screenResize } from "./systems/screenResize";
+import { fullscreen } from "./systems/fullscreen";
 
 const stats = Stats();
 document.body.appendChild(stats.dom);
@@ -14,20 +17,19 @@ document.body.appendChild(stats.dom);
 const start = (position: GeolocationPosition) => {
   let suncalcValues = getSunCalc(position);
 
-  const canvas = document.querySelector("#canvas");
-  const renderer = new THREE.WebGLRenderer({ canvas });
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-
-  const camera = createCamara();
-
   const scene = createScene();
   const cubeboxs = createCubeBoxs(suncalcValues.dayPercentage);
   const board = createBoard();
   const light = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(cubeboxs, board, light);
 
+  const camera = createCamera();
+
+  const renderer = createRenderer();
   const controls = createControls(camera, renderer.domElement);
   const composer = createComposer(renderer, scene, camera);
+  screenResize(camera, renderer, composer);
+  fullscreen();
 
   let last = 0;
   let activeIndex: number | undefined = undefined;
